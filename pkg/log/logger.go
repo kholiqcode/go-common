@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/kholiqcode/go-common/pkg/constants"
@@ -75,63 +76,63 @@ func NewLogger(level string, encoding string, opts ...string) *Logger {
 
 func (l *Logger) Infow(msg string, args ...interface{}) {
 	l.sugarLogger.Infow(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Debugw(msg string, args ...interface{}) {
 	l.sugarLogger.Debugw(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Warnw(msg string, args ...interface{}) {
 	l.sugarLogger.Warnw(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Errorw(msg string, args ...interface{}) {
 	l.sugarLogger.Errorw(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Panicw(msg string, args ...interface{}) {
 	l.sugarLogger.Panicw(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Fatalw(msg string, args ...interface{}) {
 	l.sugarLogger.Fatalw(msg, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Infof(format string, args ...interface{}) {
 	l.sugarLogger.Infof(format, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Debugf(format string, args ...interface{}) {
 	l.sugarLogger.Debugf(format, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Warnf(format string, args ...interface{}) {
 	l.sugarLogger.Warnf(format, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
@@ -141,7 +142,7 @@ func (l *Logger) Errorf(format string, args ...interface{}) error {
 
 	l.sugarLogger.Errorf(format, args...)
 
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 
@@ -150,14 +151,14 @@ func (l *Logger) Errorf(format string, args ...interface{}) error {
 
 func (l *Logger) Panicf(format string, args ...interface{}) {
 	l.sugarLogger.Panicf(format, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
 
 func (l *Logger) Fatalf(format string, args ...interface{}) {
 	l.sugarLogger.Fatalf(format, args...)
-	if err := l.sugarLogger.Sync(); err != nil {
+	if err := l.sugarLogger.Sync(); err != nil && !errors.Is(err, syscall.ENOTTY) {
 		fmt.Printf("error : %s", err.Error())
 	}
 }
