@@ -9,7 +9,7 @@ server:
     port: ":9050"
 database:
   driver: "postgres"
-  host: "127.0.0.1"
+  host: "localhost"
   port: ":5432"
   user: "postgres"
   password: "postgres"
@@ -23,13 +23,13 @@ redis:
   password: ""
   cacheDuration: "60m"
 kafka:
-  host: "127.0.0.1"
+  host: "localhost"
   port: ":9092"
   user: "kafka"
   password: ""
   isRemote: false
   kafkaConfig:
-    brokers: [ "127.0.0.1:9093" ]
+    brokers: [ "localhost:9093" ]
     groupID: microservice_consumer
     initTopics: true
   publisherConfig:
@@ -42,14 +42,20 @@ kafka:
       topicName: event_created
       partitions: 10
       replicationFactor: 1
+jaeger:
+  enable: false
+  serviceName: jaeger_service
+  host: "localhost"
+  port: ":6831"
+  logSpans: false
 s3:
   secretKey: "minio"
   accessKey: "minio123"
   region: "us-east-1"
   publicBucketName: "publicBucket"
   privateBucketName: "privateBucket"
-  endpoint: "http://127.0.0.1:9000"
-  publicUrl: "http://127.0.0.1/s3"
+  endpoint: "http://localhost:9000"
+  publicUrl: "http://localhost/s3"
   preSignUrlDuration: 30
 mail:
   driver: "smtp"

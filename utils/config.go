@@ -61,6 +61,14 @@ type KafkaPublisherConfig struct {
 	Headers           []kafka.Header `json:"headers" yaml:"headers"`
 }
 
+type Jaeger struct {
+	ServiceName string `json:"serviceName" yaml:"serviceName"`
+	Host        string `json:"host" yaml:"host"`
+	Port        string `json:"port" yaml:"port"`
+	Enable      bool   `json:"enable" yaml:"enable"`
+	LogSpans    bool   `json:"logSpans" yaml:"logSpans"`
+}
+
 type S3 struct {
 	Endpoint           string        `json:"endpoint" yaml:"endpoint"`
 	SecretKey          string        `json:"secretKey" yaml:"secretKey"`
@@ -113,6 +121,7 @@ type Config struct {
 	JWT      JWT
 	Kafka    Kafka
 	S3       S3
+	Jaeger   Jaeger
 }
 
 func LoadConfig(path string) (*Config, error) {

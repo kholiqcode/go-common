@@ -1,21 +1,16 @@
 package tracing
 
 import (
+	"io"
+
+	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/config"
 	"github.com/uber/jaeger-client-go/zipkin"
-	"io"
 )
 
-type Config struct {
-	ServiceName string `mapstructure:"serviceName" validate:"required"`
-	HostPort    string `mapstructure:"hostPort" validate:"required"`
-	Enable      bool   `mapstructure:"enable"`
-	LogSpans    bool   `mapstructure:"logSpans"`
-}
-
-func NewJaegerTracer(jaegerConfig *Config) (opentracing.Tracer, io.Closer, error) {
+func NewJaegerTracer(jaegerConfig *common_utils.Jaeger) (opentracing.Tracer, io.Closer, error) {
 	cfg := &config.Configuration{
 		ServiceName: jaegerConfig.ServiceName,
 
@@ -28,7 +23,7 @@ func NewJaegerTracer(jaegerConfig *Config) (opentracing.Tracer, io.Closer, error
 		// Log the emitted spans to stdout.
 		Reporter: &config.ReporterConfig{
 			LogSpans:           jaegerConfig.LogSpans,
-			LocalAgentHostPort: jaegerConfig.HostPort,
+			LocalAgentHostPort: jaegerConfig.Host + jaegerConfig.Port,
 		},
 	}
 
