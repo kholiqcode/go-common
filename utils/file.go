@@ -1,7 +1,9 @@
 package common_utils
 
 import (
+	"io"
 	"mime"
+	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -29,4 +31,25 @@ func CheckIfFileExists(path string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+func DownloadFile(url, filePath string) error {
+	response, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, response.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

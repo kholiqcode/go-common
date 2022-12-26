@@ -29,3 +29,11 @@ func TestDeleteFile(t *testing.T) {
 
 	assert.Equal(t, false, CheckIfFileExists("test.txt"), "File deleted")
 }
+
+func TestDownloadFile(t *testing.T) {
+	if err := DownloadFile("https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png", "google.png"); err != nil {
+		t.Error(err)
+	}
+
+	assert.Equal(t, true, CheckIfFileExists("google.png"), "File downloaded")
+}
