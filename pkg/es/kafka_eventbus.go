@@ -5,11 +5,15 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/kholiqcode/go-common/pkg/es/serializer"
 	kafkaClient "github.com/kholiqcode/go-common/pkg/kafka"
-	"github.com/kholiqcode/go-common/pkg/serializer"
+	"github.com/kholiqcode/go-common/pkg/tracing"
 	common_utils "github.com/kholiqcode/go-common/utils"
+	"github.com/opentracing/opentracing-go"
+	"github.com/pkg/errors"
 	"github.com/segmentio/kafka-go"
 )
+
 
 type kafkaEventsBus struct {
 	producer kafkaClient.Producer
@@ -23,17 +27,19 @@ func NewKafkaEventsBus(producer kafkaClient.Producer, cfg common_utils.KafkaPubl
 
 // ProcessEvents serialize to json and publish es.Event's to the kafka topic.
 func (e *kafkaEventsBus) ProcessEvents(ctx context.Context, events []Event) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "kafkaEventsBus.ProcessEvents")
+	defer span.Finish()
 
 	eventsBytes, err := serializer.Marshal(events)
-
 	if err != nil {
-		return err
+		return tracing.TraceWithErr(span, errors.Wrap(err, "serializer.Marshal"))
 	}
 
 	return e.producer.PublishMessage(ctx, kafka.Message{
-		Topic: GetTopicName(e.cfg.TopicPrefix, string(events[0].GetAggregateType())),
-		Value: eventsBytes,
-		Time:  time.Now().UTC(),
+		Topic:   GetTopicName(e.cfg.TopicPrefix, string(events[0].GetAggregateType())),
+		Value:   eventsBytes,
+		Headers: tracing.GetKafkaTracingHeadersFromSpanCtx(span.Context()),
+		Time:    time.Now().UTC(),
 	})
 }
 

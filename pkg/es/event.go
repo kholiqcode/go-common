@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/kholiqcode/go-common/pkg/serializer"
+	"github.com/kholiqcode/go-common/pkg/es/serializer"
 )
 
 // EventType is the type of any event, used as its unique identifier.
