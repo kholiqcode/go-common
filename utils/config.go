@@ -25,9 +25,9 @@ type Redis struct {
 	User          string        `json:"user" yaml:"user"`
 	Password      string        `json:"password" yaml:"password"`
 	DB            int           `json:"db" yaml:"db"`
-	PoolSize      int           `json:"pool_size" yaml:"pool_size"`
-	PoolTimeout   time.Duration `json:"pool_timeout" yaml:"pool_timeout"`
-	CacheDuration time.Duration `json:"cache_duration" yaml:"cache_duration"`
+	PoolSize      int           `json:"poolSize" yaml:"poolSize"`
+	PoolTimeout   time.Duration `json:"poolTimeout" yaml:"poolTimeout"`
+	CacheDuration time.Duration `json:"cacheDuration" yaml:"cacheDuration"`
 }
 
 type KafkaConfig struct {
@@ -47,10 +47,10 @@ type Kafka struct {
 	Port            string               `json:"port" yaml:"port"`
 	User            string               `json:"user" yaml:"user"`
 	Password        string               `json:"password" yaml:"password"`
-	IsRemote        bool                 `json:"is_remote" yaml:"is_remote"`
-	KafkaConfig     KafkaConfig          `json:"kafka_config" yaml:"kafka_config"`
-	TopicConfig     TopicConfig          `json:"topic_config" yaml:"topic_config"`
-	PublisherConfig KafkaPublisherConfig `json:"publisher_config" yaml:"publisher_config"`
+	IsRemote        bool                 `json:"isRemote" yaml:"isRemote"`
+	KafkaConfig     KafkaConfig          `json:"kafkaConfig" yaml:"kafkaConfig"`
+	TopicConfig     TopicConfig          `json:"topicConfig" yaml:"topicConfig"`
+	PublisherConfig KafkaPublisherConfig `mapstructure:"publisherConfig" json:"publisherConfig" yaml:"publisherConfig"`
 }
 
 type KafkaPublisherConfig struct {
@@ -63,13 +63,13 @@ type KafkaPublisherConfig struct {
 
 type S3 struct {
 	Endpoint           string        `json:"endpoint" yaml:"endpoint"`
-	SecretKey          string        `json:"secret_key" yaml:"secret_key"`
-	AccessKey          string        `json:"access_key" yaml:"access_key"`
+	SecretKey          string        `json:"secretKey" yaml:"secretKey"`
+	AccessKey          string        `json:"accessKey" yaml:"accessKey"`
 	Region             string        `json:"region" yaml:"region"`
-	PublicBucketName   string        `json:"public_bucket_name" yaml:"public_bucket_name"`
-	PrivateBucketName  string        `json:"private_bucket_name" yaml:"private_bucket_name"`
-	PublicUrl          string        `json:"public_url" yaml:"public_url"`
-	PreSignUrlDuration time.Duration `json:"pre_sign_url_duration" yaml:"pre_sign_url_duration"`
+	PublicBucketName   string        `json:"publicBucketName" yaml:"publicBucketName"`
+	PrivateBucketName  string        `json:"privateBucketName" yaml:"privateBucketName"`
+	PublicUrl          string        `json:"publicUrl" yaml:"publicUrl"`
+	PreSignUrlDuration time.Duration `json:"preSignUrlDuration" yaml:"preSignUrlDuration"`
 }
 
 type Mail struct {
