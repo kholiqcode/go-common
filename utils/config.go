@@ -5,6 +5,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/segmentio/kafka-go"
 	"github.com/spf13/viper"
 )
 
@@ -42,17 +43,26 @@ type TopicConfig struct {
 }
 
 type Kafka struct {
-	Host        string      `json:"host" yaml:"host"`
-	Port        string      `json:"port" yaml:"port"`
-	User        string      `json:"user" yaml:"user"`
-	Password    string      `json:"password" yaml:"password"`
-	IsRemote    bool        `json:"is_remote" yaml:"is_remote"`
-	KafkaConfig KafkaConfig `json:"kafka_config" yaml:"kafka_config"`
-	TopicConfig TopicConfig `json:"topic_config" yaml:"topic_config"`
+	Host            string          `json:"host" yaml:"host"`
+	Port            string          `json:"port" yaml:"port"`
+	User            string          `json:"user" yaml:"user"`
+	Password        string          `json:"password" yaml:"password"`
+	IsRemote        bool            `json:"is_remote" yaml:"is_remote"`
+	KafkaConfig     KafkaConfig     `json:"kafka_config" yaml:"kafka_config"`
+	TopicConfig     TopicConfig     `json:"topic_config" yaml:"topic_config"`
+	PublisherConfig KafkaPublisherConfig `json:"publisher_config" yaml:"publisher_config"`
+}
+
+type KafkaPublisherConfig struct {
+	Topic             string         `json:"topic" yaml:"topic"`
+	TopicPrefix       string         `json:"topicPrefix" yaml:"topicPrefix"`
+	Partitions        int            `json:"partitions" yaml:"partitions"`
+	ReplicationFactor int            `json:"replicationFactor" yaml:"replicationFactor"`
+	Headers           []kafka.Header `json:"headers" yaml:"headers"`
 }
 
 type S3 struct {
-	Endpoint          string        `json:"endpoint" yaml:"endpoint"`
+	Endpoint           string        `json:"endpoint" yaml:"endpoint"`
 	SecretKey          string        `json:"secret_key" yaml:"secret_key"`
 	AccessKey          string        `json:"access_key" yaml:"access_key"`
 	Region             string        `json:"region" yaml:"region"`
