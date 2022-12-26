@@ -7,25 +7,17 @@ import (
 
 	kafkaClient "github.com/kholiqcode/go-common/pkg/kafka"
 	"github.com/kholiqcode/go-common/pkg/serializer"
+	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/segmentio/kafka-go"
 )
 
-// KafkaEventsBusConfig kafka eventbus config.
-type KafkaEventsBusConfig struct {
-	Topic             string `mapstructure:"topic" validate:"required"`
-	TopicPrefix       string `mapstructure:"topicPrefix" validate:"required"`
-	Partitions        int    `mapstructure:"partitions" validate:"required,gte=0"`
-	ReplicationFactor int    `mapstructure:"replicationFactor" validate:"required,gte=0"`
-	Headers           []kafka.Header
-}
-
 type kafkaEventsBus struct {
 	producer kafkaClient.Producer
-	cfg      KafkaEventsBusConfig
+	cfg      common_utils.KafkaPublisherConfig
 }
 
 // NewKafkaEventsBus kafkaEventsBus constructor.
-func NewKafkaEventsBus(producer kafkaClient.Producer, cfg KafkaEventsBusConfig) *kafkaEventsBus {
+func NewKafkaEventsBus(producer kafkaClient.Producer, cfg common_utils.KafkaPublisherConfig) *kafkaEventsBus {
 	return &kafkaEventsBus{producer: producer, cfg: cfg}
 }
 
@@ -49,7 +41,7 @@ func GetTopicName(eventStorePrefix string, aggregateType string) string {
 	return fmt.Sprintf("%s_%s", eventStorePrefix, aggregateType)
 }
 
-func GetKafkaAggregateTypeTopic(cfg KafkaEventsBusConfig, aggregateType string) kafka.TopicConfig {
+func GetKafkaAggregateTypeTopic(cfg common_utils.KafkaPublisherConfig, aggregateType string) kafka.TopicConfig {
 	return kafka.TopicConfig{
 		Topic:             GetTopicName(cfg.TopicPrefix, aggregateType),
 		NumPartitions:     cfg.Partitions,
