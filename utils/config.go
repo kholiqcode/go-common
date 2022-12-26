@@ -31,25 +31,25 @@ type Redis struct {
 }
 
 type KafkaConfig struct {
-	Brokers    []string `mapstructure:"brokers" validate:"required"`
-	GroupID    string   `mapstructure:"groupID" validate:"required,gte=0"`
-	InitTopics bool     `mapstructure:"initTopics"`
+	Brokers    []string `json:"brokers"`
+	GroupID    string   `json:"groupID"`
+	InitTopics bool     `json:"initTopics"`
 }
 
 type TopicConfig struct {
-	TopicName         string `mapstructure:"topicName" validate:"required,gte=0"`
-	Partitions        int    `mapstructure:"partitions" validate:"required"`
-	ReplicationFactor int    `mapstructure:"replicationFactor" validate:"required"`
+	TopicName         string `json:"topicName"`
+	Partitions        int    `json:"partitions"`
+	ReplicationFactor int    `json:"replicationFactor"`
 }
 
 type Kafka struct {
-	Host            string          `json:"host" yaml:"host"`
-	Port            string          `json:"port" yaml:"port"`
-	User            string          `json:"user" yaml:"user"`
-	Password        string          `json:"password" yaml:"password"`
-	IsRemote        bool            `json:"is_remote" yaml:"is_remote"`
-	KafkaConfig     KafkaConfig     `json:"kafka_config" yaml:"kafka_config"`
-	TopicConfig     TopicConfig     `json:"topic_config" yaml:"topic_config"`
+	Host            string               `json:"host" yaml:"host"`
+	Port            string               `json:"port" yaml:"port"`
+	User            string               `json:"user" yaml:"user"`
+	Password        string               `json:"password" yaml:"password"`
+	IsRemote        bool                 `json:"is_remote" yaml:"is_remote"`
+	KafkaConfig     KafkaConfig          `json:"kafka_config" yaml:"kafka_config"`
+	TopicConfig     TopicConfig          `json:"topic_config" yaml:"topic_config"`
 	PublisherConfig KafkaPublisherConfig `json:"publisher_config" yaml:"publisher_config"`
 }
 

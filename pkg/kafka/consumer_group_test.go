@@ -12,7 +12,7 @@ import (
 
 func TestGetNewConsumerGroup(t *testing.T) {
 	lg := log.NewLogger("", "")
-	cg := NewConsumerGroup([]string{config.Kafka.Host + config.Kafka.Port}, config.Kafka.KafkaConfig.GroupID, *lg)
+	cg := NewConsumerGroup(config.Kafka.KafkaConfig.Brokers, config.Kafka.KafkaConfig.GroupID, *lg)
 
 	assert.NotPanics(t, func() {
 		assert.Equal(t, config.Kafka.KafkaConfig.GroupID, cg.GroupID)
@@ -21,12 +21,12 @@ func TestGetNewConsumerGroup(t *testing.T) {
 
 func TestGetNewKafkaReader(t *testing.T) {
 	lg := log.NewLogger("", "")
-	cg := NewConsumerGroup([]string{config.Kafka.Host + config.Kafka.Port}, config.Kafka.KafkaConfig.GroupID, *lg)
+	cg := NewConsumerGroup(config.Kafka.KafkaConfig.Brokers, config.Kafka.KafkaConfig.GroupID, *lg)
 	assert.NotPanics(t, func() {
 		assert.Equal(t, config.Kafka.KafkaConfig.GroupID, cg.GroupID)
 	})
 
-	newCg := cg.GetNewKafkaReader([]string{config.Kafka.Host + config.Kafka.Port}, []string{"test"}, "testGroupId")
+	newCg := cg.GetNewKafkaReader(config.Kafka.KafkaConfig.Brokers, []string{"test"}, "testGroupId")
 
 	assert.NotPanics(t, func() {
 		assert.NotNil(t, newCg)
@@ -36,7 +36,7 @@ func TestGetNewKafkaReader(t *testing.T) {
 
 func TestGetNewKafkaWriter(t *testing.T) {
 	lg := log.NewLogger("", "")
-	cg := NewConsumerGroup([]string{config.Kafka.Host + config.Kafka.Port}, "test", *lg)
+	cg := NewConsumerGroup(config.Kafka.KafkaConfig.Brokers, "test", *lg)
 
 	assert.NotPanics(t, func() {
 		assert.NotNil(t, cg.GetNewKafkaWriter())
@@ -45,7 +45,7 @@ func TestGetNewKafkaWriter(t *testing.T) {
 
 func TestConsumeTopic(t *testing.T) {
 	lg := log.NewLogger("", "")
-	cg := NewConsumerGroup([]string{config.Kafka.Host + config.Kafka.Port}, "test", *lg)
+	cg := NewConsumerGroup(config.Kafka.KafkaConfig.Brokers, "test", *lg)
 
 	ctx := context.Background()
 

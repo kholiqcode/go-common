@@ -23,13 +23,13 @@ redis:
   password: ""
   cache_duration: "60m"
 kafka:
-  host: "localhost"
+  host: "127.0.0.1"
   port: ":9092"
   user: "kafka"
   password: ""
   is_remote: false
   kafka_config:
-    brokers: [ "localhost:9093" ]
+    brokers: [ "127.0.0.1:9093" ]
     groupID: microservice_consumer
     initTopics: true
   publisher_config:
