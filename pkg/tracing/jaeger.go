@@ -47,7 +47,7 @@ func NewJaegerTracer(cfg *common_utils.Config, log *log.Logger) error {
 		}
 		defer closer.Close() // nolint: errcheck
 
-		log.Infof("Setting global tracer to: %+v", tracer)
+		log.Infof("Setting global tracer")
 		opentracing.SetGlobalTracer(tracer)
 	}
 	return nil
