@@ -1,6 +1,7 @@
 package tracing
 
 import (
+	"github.com/kholiqcode/go-common/pkg/log"
 	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
@@ -8,7 +9,7 @@ import (
 	"github.com/uber/jaeger-client-go/zipkin"
 )
 
-func NewJaegerTracer(cfg *common_utils.Config) error {
+func NewJaegerTracer(cfg *common_utils.Config, log *log.Logger) error {
 	jaegerConfig := cfg.Jaeger
 
 	cfgJg := &config.Configuration{
@@ -30,6 +31,7 @@ func NewJaegerTracer(cfg *common_utils.Config) error {
 	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
 
 	if jaegerConfig.Enable {
+		log.Infof("Starting Jaeger Tracer with config: %+v", jaegerConfig.Host+jaegerConfig.Port)
 		tracer, closer, err := cfgJg.NewTracer(
 			config.Logger(jaeger.StdLogger),
 			config.Injector(opentracing.HTTPHeaders, zipkinPropagator),
@@ -44,6 +46,8 @@ func NewJaegerTracer(cfg *common_utils.Config) error {
 			return err
 		}
 		defer closer.Close() // nolint: errcheck
+
+		log.Infof("Setting global tracer to: %+v", tracer)
 		opentracing.SetGlobalTracer(tracer)
 	}
 	return nil
