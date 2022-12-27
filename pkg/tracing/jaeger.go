@@ -1,7 +1,8 @@
 package tracing
 
 import (
-	"github.com/kholiqcode/go-common/pkg/log"
+	"io"
+
 	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
@@ -9,7 +10,7 @@ import (
 	"github.com/uber/jaeger-client-go/zipkin"
 )
 
-func NewJaegerTracer(cfg *common_utils.Config, log *log.Logger) error {
+func NewJaegerTracer(cfg *common_utils.Config) (opentracing.Tracer, io.Closer, error) {
 	jaegerConfig := cfg.Jaeger
 
 	cfgJg := &config.Configuration{
@@ -30,26 +31,15 @@ func NewJaegerTracer(cfg *common_utils.Config, log *log.Logger) error {
 
 	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
 
-	if jaegerConfig.Enable {
-		log.Infof("Starting Jaeger Tracer with config: %+v", jaegerConfig.Host+jaegerConfig.Port)
-		tracer, closer, err := cfgJg.NewTracer(
-			config.Logger(jaeger.StdLogger),
-			config.Injector(opentracing.HTTPHeaders, zipkinPropagator),
-			config.Injector(opentracing.TextMap, zipkinPropagator),
-			config.Injector(opentracing.Binary, zipkinPropagator),
-			config.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
-			config.Extractor(opentracing.TextMap, zipkinPropagator),
-			config.Extractor(opentracing.Binary, zipkinPropagator),
-			config.ZipkinSharedRPCSpan(false),
-		)
-		if err != nil {
-			return err
-		}
-		defer closer.Close() // nolint: errcheck
-
-		log.Infof("Setting global tracer")
-		opentracing.SetGlobalTracer(tracer)
-	}
-	return nil
+	return cfgJg.NewTracer(
+		config.Logger(jaeger.StdLogger),
+		config.Injector(opentracing.HTTPHeaders, zipkinPropagator),
+		config.Injector(opentracing.TextMap, zipkinPropagator),
+		config.Injector(opentracing.Binary, zipkinPropagator),
+		config.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
+		config.Extractor(opentracing.TextMap, zipkinPropagator),
+		config.Extractor(opentracing.Binary, zipkinPropagator),
+		config.ZipkinSharedRPCSpan(false),
+	)
 
 }
