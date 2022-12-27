@@ -8,8 +8,10 @@ import (
 	"github.com/uber/jaeger-client-go/zipkin"
 )
 
-func NewJaegerTracer(jaegerConfig *common_utils.Jaeger) error {
-	cfg := &config.Configuration{
+func NewJaegerTracer(cfg *common_utils.Config) error {
+	jaegerConfig := cfg.Jaeger
+
+	cfgJg := &config.Configuration{
 		ServiceName: jaegerConfig.ServiceName,
 
 		// "const" sampler is a binary sampling strategy: 0=never sample, 1=always sample.
@@ -28,7 +30,7 @@ func NewJaegerTracer(jaegerConfig *common_utils.Jaeger) error {
 	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
 
 	if jaegerConfig.Enable {
-		tracer, closer, err := cfg.NewTracer(
+		tracer, closer, err := cfgJg.NewTracer(
 			config.Logger(jaeger.StdLogger),
 			config.Injector(opentracing.HTTPHeaders, zipkinPropagator),
 			config.Injector(opentracing.TextMap, zipkinPropagator),
