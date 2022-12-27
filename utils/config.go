@@ -30,6 +30,13 @@ type Redis struct {
 	CacheDuration time.Duration `json:"cacheDuration" yaml:"cacheDuration"`
 }
 
+type Cassandra struct {
+	HostPort []string `json:"hostPort" yaml:"hostPort"`
+	User     string   `json:"user" yaml:"user"`
+	Password string   `json:"password" yaml:"password"`
+	Keyspace string   `json:"keyspace" yaml:"keyspace"`
+}
+
 type KafkaConfig struct {
 	Brokers    []string `json:"brokers"`
 	GroupID    string   `json:"groupID"`
@@ -115,13 +122,14 @@ type Server struct {
 }
 
 type Config struct {
-	Server   Server
-	Database Database
-	Redis    Redis
-	JWT      JWT
-	Kafka    Kafka
-	S3       S3
-	Jaeger   Jaeger
+	Server    Server
+	Database  Database
+	Cassandra Cassandra
+	Redis     Redis
+	JWT       JWT
+	Kafka     Kafka
+	S3        S3
+	Jaeger    Jaeger
 }
 
 func LoadConfig(path string) (*Config, error) {
