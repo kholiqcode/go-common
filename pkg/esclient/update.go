@@ -5,7 +5,7 @@ import (
 	"context"
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
-	"github.com/kholiqcode/go-common/pkg/es/serializer"
+	"github.com/kholiqcode/go-common/pkg/serializer"
 )
 
 func Update(ctx context.Context, transport esapi.Transport, index, documentID string, document any) (*esapi.Response, error) {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kholiqcode/go-common/pkg/es/serializer"
+	"github.com/kholiqcode/go-common/pkg/serializer"
 	kafkaClient "github.com/kholiqcode/go-common/pkg/kafka"
 	"github.com/kholiqcode/go-common/pkg/tracing"
 	common_utils "github.com/kholiqcode/go-common/utils"

@@ -2,7 +2,7 @@ package es
 
 import (
 	"fmt"
-	"github.com/kholiqcode/go-common/pkg/es/serializer"
+	"github.com/kholiqcode/go-common/pkg/serializer"
 	"github.com/pkg/errors"
 )
 

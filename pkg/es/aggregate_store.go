@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v4"
-	"github.com/kholiqcode/go-common/pkg/es/serializer"
+	"github.com/kholiqcode/go-common/pkg/serializer"
 	"github.com/kholiqcode/go-common/pkg/tracing"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/log"

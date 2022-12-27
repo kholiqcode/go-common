@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
-	"github.com/kholiqcode/go-common/pkg/es/serializer"
+	"github.com/kholiqcode/go-common/pkg/serializer"
 )
 
 func SearchMatchPhrasePrefix[T any](ctx context.Context, transport esapi.Transport, request SearchMatchPrefixRequest) (*SearchListResponse[T], error) {
