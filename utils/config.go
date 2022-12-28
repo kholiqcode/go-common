@@ -121,6 +121,7 @@ type GRPC struct {
 
 type Metrics struct {
 	Port          string   `json:"port" yaml:"port"`
+	BasePath      string   `json:"basePath" yaml:"basePath"`
 	IgnoreLogUrls []string `json:"ignoreLogUrls" yaml:"ignoreLogUrls"`
 }
 

@@ -7,6 +7,7 @@ server:
     port: ":8080"
   metrics:
     port: ":9050"
+    basePath: "/metrics"
     ignoreLogUrls: [ "metrics", "swagger" ]
 database:
   driver: "postgres"
