@@ -15,7 +15,7 @@ database:
   password: "postgres"
   name: "postgres"
 cassandra:
-  hostPort: ["localhost:9043"]
+  hostPort: [ "localhost:9043" ]
   user: "cassandra"
   password: "cassandra"
   keyspace: "test_keyspace"
