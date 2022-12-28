@@ -7,6 +7,7 @@ server:
     port: ":8080"
   metrics:
     port: ":9050"
+    ignoreLogUrls: [ "metrics", "swagger" ]
 database:
   driver: "postgres"
   host: "localhost"
@@ -19,6 +20,12 @@ cassandra:
   user: "cassandra"
   password: "cassandra"
   keyspace: "test_keyspace"
+elasticSearch:
+  addresses: ["http://localhost:9200"]
+  username: ""
+  password: ""
+  apiKey: ""
+  enableLogging: false
 jwt:
   secret: "secret"
   expires: "60m"

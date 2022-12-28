@@ -1,6 +1,7 @@
 package common_utils
 
 import (
+	"net/http"
 	"path"
 	"runtime"
 	"time"
@@ -35,6 +36,15 @@ type Cassandra struct {
 	User     string   `json:"user" yaml:"user"`
 	Password string   `json:"password" yaml:"password"`
 	Keyspace string   `json:"keyspace" yaml:"keyspace"`
+}
+
+type Elastic struct {
+	Addresses     []string    `json:"addresses"`
+	Username      string      `json:"username"`
+	Password      string      `json:"password"`
+	APIKey        string      `json:"apiKey"`
+	Header        http.Header // Global HTTP request header.
+	EnableLogging bool        `json:"enableLogging"`
 }
 
 type KafkaConfig struct {
@@ -110,7 +120,8 @@ type GRPC struct {
 }
 
 type Metrics struct {
-	Port string `json:"port" yaml:"port"`
+	Port          string   `json:"port" yaml:"port"`
+	IgnoreLogUrls []string `json:"ignoreLogUrls" yaml:"ignoreLogUrls"`
 }
 
 type Server struct {
@@ -125,6 +136,7 @@ type Config struct {
 	Server    Server
 	Database  Database
 	Cassandra Cassandra
+	Elastic   Elastic
 	Redis     Redis
 	JWT       JWT
 	Kafka     Kafka
