@@ -78,6 +78,10 @@ type KafkaPublisherConfig struct {
 	Headers           []kafka.Header `json:"headers" yaml:"headers"`
 }
 
+type EventSource struct {
+	SnapshotFrequency uint64 `json:"snapshotFrequency" yaml:"snapshotFrequency"`
+}
+
 type Jaeger struct {
 	ServiceName string `json:"serviceName" yaml:"serviceName"`
 	Host        string `json:"host" yaml:"host"`
@@ -134,15 +138,16 @@ type Server struct {
 }
 
 type Config struct {
-	Server    Server
-	Database  Database
-	Cassandra Cassandra
-	Elastic   Elastic
-	Redis     Redis
-	JWT       JWT
-	Kafka     Kafka
-	S3        S3
-	Jaeger    Jaeger
+	Server      Server
+	Database    Database
+	Cassandra   Cassandra
+	Elastic     Elastic
+	Redis       Redis
+	JWT         JWT
+	Kafka       Kafka
+	S3          S3
+	Jaeger      Jaeger
+	EventSource EventSource
 }
 
 func LoadConfig(path string) (*Config, error) {

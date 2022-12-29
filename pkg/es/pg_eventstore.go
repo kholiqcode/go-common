@@ -2,10 +2,12 @@ package es
 
 import (
 	"context"
-	logger "github.com/kholiqcode/go-common/pkg/log"
-	"github.com/kholiqcode/go-common/pkg/tracing"
+
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
+	logger "github.com/kholiqcode/go-common/pkg/log"
+	"github.com/kholiqcode/go-common/pkg/tracing"
+	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/log"
 	"github.com/pkg/errors"
@@ -17,13 +19,13 @@ const (
 
 type pgEventStore struct {
 	log        logger.Logger
-	cfg        Config
+	cfg        *common_utils.Config
 	db         *pgxpool.Pool
 	eventBus   EventsBus
 	serializer Serializer
 }
 
-func NewPgEventStore(log logger.Logger, cfg Config, db *pgxpool.Pool, eventBus EventsBus, serializer Serializer) *pgEventStore {
+func NewPgEventStore(log logger.Logger, cfg *common_utils.Config, db *pgxpool.Pool, eventBus EventsBus, serializer Serializer) *pgEventStore {
 	return &pgEventStore{log: log, cfg: cfg, db: db, eventBus: eventBus, serializer: serializer}
 }
 
@@ -214,7 +216,7 @@ func (p *pgEventStore) loadEventsByVersion(ctx context.Context, aggregateID stri
 	}
 	defer rows.Close()
 
-	events := make([]Event, 0, p.cfg.SnapshotFrequency)
+	events := make([]Event, 0, p.cfg.EventSource.SnapshotFrequency)
 
 	for rows.Next() {
 		var event Event
@@ -306,7 +308,7 @@ func (p *pgEventStore) loadEventsByVersionTx(ctx context.Context, tx pgx.Tx, agg
 	}
 	defer rows.Close()
 
-	events := make([]Event, 0, p.cfg.SnapshotFrequency)
+	events := make([]Event, 0, p.cfg.EventSource.SnapshotFrequency)
 
 	for rows.Next() {
 		var event Event
