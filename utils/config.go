@@ -82,6 +82,13 @@ type EventSource struct {
 	SnapshotFrequency uint64 `json:"snapshotFrequency" yaml:"snapshotFrequency"`
 }
 
+type Migration struct {
+	Enable    bool   `json:"enable" yaml:"enable"`
+	Recreate  bool   `json:"recreate" yaml:"recreate"`
+	SourceURL string `json:"sourceURL" yaml:"sourceURL"`
+	DbURL     string `json:"dbURL" yaml:"dbURL"`
+}
+
 type Jaeger struct {
 	ServiceName string `json:"serviceName" yaml:"serviceName"`
 	Host        string `json:"host" yaml:"host"`
@@ -148,6 +155,7 @@ type Config struct {
 	S3          S3
 	Jaeger      Jaeger
 	EventSource EventSource `mapstructure:"eventSource" json:"eventSource" yaml:"eventSource"`
+	Migrations   []Migration   `mapstructure:"migrations" json:"migrations" yaml:"migrations"`
 }
 
 func LoadConfig(path string) (*Config, error) {
