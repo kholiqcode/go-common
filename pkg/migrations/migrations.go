@@ -2,22 +2,16 @@ package migrations
 
 import (
 	"github.com/golang-migrate/migrate/v4"
+	common_utils "github.com/kholiqcode/go-common/utils"
 	"github.com/pkg/errors"
 )
 
-type Config struct {
-	Enable    bool   `mapstructure:"enable"`
-	Recreate  bool   `mapstructure:"recreate"`
-	SourceURL string `mapstructure:"sourceURL" validate:"required,gte=0"`
-	DbURL     string `mapstructure:"dbURL" validate:"required,gte=0"`
-}
-
-func RunMigrations(cfg Config) (version uint, dirty bool, err error) {
-	if !cfg.Enable {
+func RunMigrations(cfg common_utils.Config) (version uint, dirty bool, err error) {
+	if !cfg.Migration.Enable {
 		return 0, false, nil
 	}
 
-	m, err := migrate.New(cfg.SourceURL, cfg.DbURL)
+	m, err := migrate.New(cfg.Migration.SourceURL, cfg.Migration.DbURL)
 	if err != nil {
 		return 0, false, err
 	}
@@ -31,7 +25,7 @@ func RunMigrations(cfg Config) (version uint, dirty bool, err error) {
 		}
 	}()
 
-	if cfg.Recreate {
+	if cfg.Migration.Recreate {
 		if err := m.Down(); err != nil {
 			return 0, false, err
 		}

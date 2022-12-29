@@ -155,7 +155,7 @@ type Config struct {
 	S3          S3
 	Jaeger      Jaeger
 	EventSource EventSource `mapstructure:"eventSource" json:"eventSource" yaml:"eventSource"`
-	Migrations   []Migration   `mapstructure:"migrations" json:"migrations" yaml:"migrations"`
+	Migration   Migration   `mapstructure:"migration" json:"migration" yaml:"migration"`
 }
 
 func LoadConfig(path string) (*Config, error) {
