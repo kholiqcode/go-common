@@ -79,7 +79,7 @@ mail:
   username: "a824c848c8df5d"
   password: "123456"
   encryption: ""
-migrations:
+migration:
   enable: true
   recreate: false
   sourceURL: "file://migrations"

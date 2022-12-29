@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func RunMigrations(cfg common_utils.Config) (version uint, dirty bool, err error) {
+func RunMigrations(cfg *common_utils.Config) (version uint, dirty bool, err error) {
 	if !cfg.Migration.Enable {
 		return 0, false, nil
 	}
