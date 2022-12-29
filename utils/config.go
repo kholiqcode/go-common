@@ -147,7 +147,7 @@ type Config struct {
 	Kafka       Kafka
 	S3          S3
 	Jaeger      Jaeger
-	EventSource EventSource
+	EventSource EventSource `mapstructure:"eventSource" json:"eventSource" yaml:"eventSource"`
 }
 
 func LoadConfig(path string) (*Config, error) {

@@ -18,14 +18,14 @@ const (
 )
 
 type pgEventStore struct {
-	log        logger.Logger
+	log        *logger.Logger
 	cfg        *common_utils.Config
 	db         *pgxpool.Pool
 	eventBus   EventsBus
 	serializer Serializer
 }
 
-func NewPgEventStore(log logger.Logger, cfg *common_utils.Config, db *pgxpool.Pool, eventBus EventsBus, serializer Serializer) *pgEventStore {
+func NewPgEventStore(log *logger.Logger, cfg *common_utils.Config, db *pgxpool.Pool, eventBus EventsBus, serializer Serializer) *pgEventStore {
 	return &pgEventStore{log: log, cfg: cfg, db: db, eventBus: eventBus, serializer: serializer}
 }
 

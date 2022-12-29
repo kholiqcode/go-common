@@ -21,7 +21,7 @@ cassandra:
   user: "cassandra"
   password: "cassandra"
   keyspace: "test_keyspace"
-elasticSearch:
+elastic:
   addresses: ["http://localhost:9200"]
   username: ""
   password: ""
@@ -55,6 +55,8 @@ kafka:
       topicName: event_created
       partitions: 10
       replicationFactor: 1
+eventSource:
+  SnapshotFrequency: 5
 jaeger:
   enable: false
   serviceName: jaeger_service
