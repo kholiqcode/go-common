@@ -24,7 +24,7 @@ func NewWriter(brokers []string, errLogger kafka.Logger) *kafka.Writer {
 }
 
 // NewAsyncWriter create new configured kafka async writer
-func NewAsyncWriter(brokers []string, errLogger kafka.Logger, log log.Logger) *kafka.Writer {
+func NewAsyncWriter(brokers []string, errLogger kafka.Logger, log *log.Logger) *kafka.Writer {
 	return &kafka.Writer{
 		Addr:         kafka.TCP(brokers...),
 		Balancer:     &kafka.LeastBytes{},
@@ -47,7 +47,7 @@ func NewAsyncWriter(brokers []string, errLogger kafka.Logger, log log.Logger) *k
 type AsyncWriterCallback func(messages []kafka.Message) error
 
 // NewAsyncWriterWithCallback create new configured kafka async writer
-func NewAsyncWriterWithCallback(brokers []string, errLogger kafka.Logger, log log.Logger, cb AsyncWriterCallback) *kafka.Writer {
+func NewAsyncWriterWithCallback(brokers []string, errLogger kafka.Logger, log *log.Logger, cb AsyncWriterCallback) *kafka.Writer {
 	return &kafka.Writer{
 		Addr:         kafka.TCP(brokers...),
 		Balancer:     &kafka.LeastBytes{},
@@ -72,7 +72,7 @@ func NewAsyncWriterWithCallback(brokers []string, errLogger kafka.Logger, log lo
 }
 
 // NewRequireNoneWriter create new configured kafka writer
-func NewRequireNoneWriter(brokers []string, errLogger kafka.Logger, log log.Logger) *kafka.Writer {
+func NewRequireNoneWriter(brokers []string, errLogger kafka.Logger, log *log.Logger) *kafka.Writer {
 	w := &kafka.Writer{
 		Addr:         kafka.TCP(brokers...),
 		Balancer:     &kafka.LeastBytes{},

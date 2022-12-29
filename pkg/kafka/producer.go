@@ -14,28 +14,28 @@ type Producer interface {
 }
 
 type producer struct {
-	log     log.Logger
+	log     *log.Logger
 	brokers []string
 	w       *kafka.Writer
 }
 
 // NewProducer create new kafka producer
-func NewProducer(log log.Logger, cfg common_utils.Config) *producer {
+func NewProducer(log *log.Logger, cfg *common_utils.Config) *producer {
 	return &producer{log: log, brokers: cfg.Kafka.KafkaConfig.Brokers, w: NewWriter(cfg.Kafka.KafkaConfig.Brokers, kafka.LoggerFunc(log.Errorw))}
 }
 
 // NewAsyncProducer create new kafka producer
-func NewAsyncProducer(log log.Logger, cfg common_utils.Config) *producer {
+func NewAsyncProducer(log *log.Logger, cfg *common_utils.Config) *producer {
 	return &producer{log: log, brokers: cfg.Kafka.KafkaConfig.Brokers, w: NewAsyncWriter(cfg.Kafka.KafkaConfig.Brokers, kafka.LoggerFunc(log.Errorw), log)}
 }
 
 // NewAsyncProducerWithCallback create new kafka producer with callback for delete invalid projection
-func NewAsyncProducerWithCallback(log log.Logger, cfg common_utils.Config, cb AsyncWriterCallback) *producer {
+func NewAsyncProducerWithCallback(log *log.Logger, cfg *common_utils.Config, cb AsyncWriterCallback) *producer {
 	return &producer{log: log, brokers: cfg.Kafka.KafkaConfig.Brokers, w: NewAsyncWriterWithCallback(cfg.Kafka.KafkaConfig.Brokers, kafka.LoggerFunc(log.Errorw), log, cb)}
 }
 
 // NewRequireNoneProducer create new fire and forget kafka producer
-func NewRequireNoneProducer(log log.Logger, cfg common_utils.Config) *producer {
+func NewRequireNoneProducer(log *log.Logger, cfg *common_utils.Config) *producer {
 	return &producer{log: log, brokers: cfg.Kafka.KafkaConfig.Brokers, w: NewRequireNoneWriter(cfg.Kafka.KafkaConfig.Brokers, kafka.LoggerFunc(log.Errorw), log)}
 }
 
