@@ -20,7 +20,7 @@ func TestNewNewElasticSearchClient(t *testing.T) {
 	config, _ := common_utils.LoadConfig("")
 
 	assert.NotPanics(t, func() {
-		client, err := NewElasticSearchClient(*config)
+		client, err := NewElasticSearchClient(config)
 		if err != nil {
 			t.Error(err)
 			panic(err)

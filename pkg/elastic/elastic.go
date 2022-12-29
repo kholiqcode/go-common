@@ -8,7 +8,7 @@ import (
 	common_utils "github.com/kholiqcode/go-common/utils"
 )
 
-func NewElasticSearchClient(cfg common_utils.Config) (*elasticsearch.Client, error) {
+func NewElasticSearchClient(cfg *common_utils.Config) (*elasticsearch.Client, error) {
 
 	config := elasticsearch.Config{
 		Addresses: cfg.Elastic.Addresses,
