@@ -84,3 +84,8 @@ migration:
   recreate: false
   sourceURL: "file://migrations"
   dbURL: "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+projections:
+  cassandraGroup: 'cassandraGroup'
+  elasticGroup: 'elasticGroup'
+  cassandraSubscriptionPoolSize: 10
+  elasticSubscriptionPoolSize: 10

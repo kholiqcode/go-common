@@ -97,6 +97,13 @@ type Jaeger struct {
 	LogSpans    bool   `json:"logSpans" yaml:"logSpans"`
 }
 
+type Projections struct {
+	CassandraGroup                string `mapstructure:"cassandraGroup" validate:"required"`
+	CassandraSubscriptionPoolSize int    `mapstructure:"cassandraSubscriptionPoolSize" validate:"required,gte=0"`
+	ElasticGroup                  string `mapstructure:"elasticGroup" validate:"required"`
+	ElasticSubscriptionPoolSize   int    `mapstructure:"elasticSubscriptionPoolSize" validate:"required,gte=0"`
+}
+
 type S3 struct {
 	Endpoint           string        `json:"endpoint" yaml:"endpoint"`
 	SecretKey          string        `json:"secretKey" yaml:"secretKey"`
@@ -156,6 +163,7 @@ type Config struct {
 	Jaeger      Jaeger
 	EventSource EventSource `mapstructure:"eventSource" json:"eventSource" yaml:"eventSource"`
 	Migration   Migration   `mapstructure:"migration" json:"migration" yaml:"migration"`
+	Projections Projections
 }
 
 func LoadConfig(path string) (*Config, error) {
